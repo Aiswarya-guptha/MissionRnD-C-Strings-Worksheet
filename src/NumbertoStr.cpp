@@ -22,4 +22,35 @@ NOTES: Don't create new string.
 
 void number_to_str(float number, char *str,int afterdecimal){
 	
+	int iter=0,integer;
+	if (number < 0){
+		//checking for negative value
+		str[0] = '-';
+		iter = 1;
+		number = number*-1;
+	}
+	integer = number;
+	for (; integer != 0; iter++, integer = integer / 10){
+		//converting into string
+		str[iter] = integer % 10 + '0';
+	}
+	integer = iter;
+	iter--;
+	int iter1;
+	if (str[0] == '-')	iter1 = 1;
+	else	iter1 = 0;
+	for (; iter1 < iter; iter1++, iter--){
+		//reverse
+		str[iter] = str[iter] + str[iter1];
+		str[iter1] = str[iter] - str[iter1];
+		str[iter] = str[iter] - str[iter1];
+	}
+	if (number != (int)number){
+		//decimal part
+		str[integer] = '.';
+		for (iter = 1; iter <= afterdecimal; iter++){
+			number = number * 10;
+			str[iter + integer] = ((int)number) % 10 + '0';
+		}
+	}
 }
